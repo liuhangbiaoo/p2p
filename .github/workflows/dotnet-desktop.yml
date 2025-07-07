@@ -33,7 +33,19 @@ jobs:
     - name: List contents of p2pconn/bin/Release
       run: ls -R ./p2pconn/bin/Release
 
-    - name: Release
+    - name: Create Git Tag
+      run: |
+        git tag v1.0.0
+        git push origin v1.0.0
+  
+    - name: Upload Release Asset
       uses: softprops/action-gh-release@v1
       with:
+        tag_name: v1.0.0  # 使用刚创建的标签
         files: p2pconn/bin/Release/p2p-portable.zip
+        token: ${{ secrets.GITHUB_TOKEN }}
+
+    # - name: Release
+    #   uses: softprops/action-gh-release@v1
+    #   with:
+    #     files: p2pconn/bin/Release/p2p-portable.zip
